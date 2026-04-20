@@ -56,6 +56,13 @@ function trainopro_neon_scripts() {
     wp_enqueue_style( 'trainopro-neon-main-css', get_template_directory_uri() . '/assets/css/main.css', array('trainopro-neon-style'), wp_get_theme()->get( 'Version' ) );
 
     // Main JS
-    wp_enqueue_script( 'trainopro-neon-main-js', get_template_directory_uri() . '/assets/js/main.js', array(), wp_get_theme()->get( 'Version' ), true );
+    wp_enqueue_script( 'trainopro_neon-main-js', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), wp_get_theme()->get( 'Version' ), true );
+
+    // Enqueue WP API for nonces
+    wp_enqueue_script( 'wp-api' );
+    wp_localize_script( 'wp-api', 'wpApiSettings', array(
+        'root' => esc_url_raw( rest_url() ),
+        'nonce' => wp_create_nonce( 'wp_rest' )
+    ));
 }
 add_action( 'wp_enqueue_scripts', 'trainopro_neon_scripts' );

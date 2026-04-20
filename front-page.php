@@ -58,7 +58,7 @@ get_header();
 #xd .xs{margin-bottom:20px!important;display:block!important;}
 
 /* ═══ GRIDS ═══ */
-#xd .g-top{display:grid!important;grid-template-columns:190px 220px 1fr!important;grid-template-rows:auto auto!important;gap:16px!important;width:100%!important;}
+#xd .g-top{display:grid!important;grid-template-columns:minmax(190px, 1fr) minmax(220px, 1fr) 2fr!important;grid-template-rows:auto auto!important;gap:16px!important;width:100%!important;}
 #xd .c-cal{grid-column:1!important;grid-row:1!important;}
 #xd .c-wt {grid-column:1!important;grid-row:2!important;}
 #xd .c-water{grid-column:2!important;grid-row:1!important;}
@@ -69,7 +69,7 @@ get_header();
 #xd .g-hlth{display:grid!important;grid-template-columns:280px 1fr!important;gap:16px!important;width:100%!important;}
 
 /* ═══ CARD ═══ */
-#xd .cd{background:#111114!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:20px!important;padding:20px!important;position:relative!important;overflow:hidden!important;display:block!important;animation:xdu .6s cubic-bezier(.2,.8,.2,1) both!important;}
+#xd .cd{background:#111114!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:20px!important;padding:22px!important;position:relative!important;overflow:hidden!important;display:block!important;animation:xdu .6s cubic-bezier(.2,.8,.2,1) both!important;min-height:160px!important;}
 #xd .cd::before{content:''!important;position:absolute!important;inset:0!important;background:linear-gradient(135deg,rgba(255,255,255,.025) 0%,transparent 60%)!important;pointer-events:none!important;border-radius:20px!important;}
 @keyframes xdu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 #xd .cd:nth-child(1){animation-delay:.05s!important;}
@@ -101,7 +101,7 @@ get_header();
 #xd .ms{font-size:11px!important;color:rgba(255,255,255,.5)!important;display:block!important;margin-top:2px!important;}
 
 /* ═══ PLUS BUTTON ═══ */
-#xd .pb{position:absolute!important;bottom:16px!important;right:16px!important;width:26px!important;height:26px!important;border-radius:50%!important;border:1px solid #e91e8c!important;background:none!important;cursor:pointer!important;display:flex!important;align-items:center!important;justify-content:center!important;color:#e91e8c!important;font-size:18px!important;font-weight:300!important;line-height:1!important;transition:all .3s ease!important;}
+#xd .pb{position:absolute!important;bottom:14px!important;right:14px!important;width:28px!important;height:28px!important;border-radius:50%!important;border:1px solid #e91e8c!important;background:none!important;cursor:pointer!important;display:flex!important;align-items:center!important;justify-content:center!important;color:#e91e8c!important;font-size:18px!important;font-weight:300!important;line-height:1!important;transition:all .3s ease!important;z-index:5!important;}
 #xd .pb:hover{background:#e91e8c!important;color:#fff!important;box-shadow:0 0 12px rgba(233,30,140,.5)!important;}
 #xd .pb-c{border-color:#00d4ff!important;color:#00d4ff!important;}
 #xd .pb-c:hover{background:#00d4ff!important;color:#000!important;box-shadow:0 0 12px rgba(0,212,255,.5)!important;}
@@ -272,6 +272,46 @@ get_header();
 .ai-btn-ok:hover{opacity:.85;}
 .ai-btn-ok:disabled{opacity:.4;cursor:not-allowed;}
 #xd-modal-close{position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.35);font-size:20px;cursor:pointer;line-height:1;padding:4px;font-family:sans-serif;}
+
+/* ═══ WORKOUT MODAL ═══ */
+#xd-work-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999999;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
+#xd-work-modal-bg.open{display:flex;}
+#xd-work-modal{background:#0d0d0f;border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:32px;max-width:850px;width:94%;position:relative;font-family:'DM Sans',sans-serif;color:#fff;max-height:92vh;overflow-y:auto;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);}
+.work-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
+.work-title-wrap h3{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin:0 0 4px;color:#fff;letter-spacing:-0.5px;}
+.work-subtitle{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;font-weight:700;}
+
+/* Calendar styles */
+.calendar-mini{display:flex;gap:6px;background:rgba(255,255,255,0.03);padding:6px;border-radius:14px;border:1px solid rgba(255,255,255,0.05);}
+.cal-day{width:42px;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;transition:all 0.3s;}
+.cal-day .d-name{font-size:9px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:2px;}
+.cal-day .d-num{font-size:14px;font-weight:800;color:rgba(255,255,255,0.7);}
+.cal-day.active{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);}
+.cal-day.active .d-num{color:#fff;}
+.cal-day.today{border-color:#00d4ff;}
+.cal-day.today .d-num{color:#00d4ff;}
+
+.work-stats-row{display:flex;gap:12px;margin-bottom:24px;}
+.work-stat-pill{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:8px 16px;border-radius:30px;font-size:12px;font-weight:600;}
+.work-stat-pill span{color:rgba(255,255,255,0.4);margin-right:4px;}
+.work-stat-pill b{color:#fff;}
+.pill-accent{background:rgba(233,30,140,0.1);border-color:rgba(233,30,140,0.3);color:#e91e8c;}
+
+/* Exercise Cards */
+.ex-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+.ex-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:20px;display:flex;overflow:hidden;position:relative;transition:all 0.3s;min-height:140px;}
+.ex-card:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.12);transform:translateY(-2px);}
+.ex-img-wrap{width:160px;position:relative;flex-shrink:0;}
+.ex-img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8) contrast(1.1);}
+.ex-img-overlay{position:absolute;inset:0;background:linear-gradient(90deg, transparent 0%, rgba(13,13,15,1) 100%);}
+.ex-info{flex:1;padding:20px;display:flex;flex-direction:column;justify-content:center;}
+.ex-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:800;text-transform:uppercase;margin-bottom:8px;}
+.badge-ch{background:rgba(233,30,140,0.15);color:#e91e8c;}
+.ex-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:6px;display:block;}
+.ex-desc{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.5;max-width:320px;}
+.ex-action{padding:20px;display:flex;align-items:center;}
+.ex-plus{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;cursor:pointer;transition:all 0.3s;}
+.ex-card:hover .ex-plus{border-color:#00d4ff;background:#00d4ff;color:#000;box-shadow:0 0 15px rgba(0,212,255,0.4);}
 
 /* ═══ FOOTER ═══ */
 #xd-footer{display:block;background:#09090c;border-top:1px solid rgba(255,255,255,.08);margin-top:0;width:100vw;margin-left:calc(-50vw + 50%);font-family:'DM Sans',sans-serif;}
@@ -463,7 +503,7 @@ get_header();
         </div>
         <span class="wo-lbl">Overall</span>
         <div style="display:flex!important;gap:8px!important;width:100%!important">
-          <button class="wbtn wbtn-p" onclick="G.toast('Opening workout plan…')">View workout</button>
+          <button class="wbtn wbtn-p" onclick="G.openWorkout()">View workout</button>
           <button class="wbtn wbtn-g" onclick="G.toast('Generating report…')">Report</button>
         </div>
       </div>
@@ -832,6 +872,39 @@ get_header();
   </div>
 </div>
 
+<!-- ═══ WORKOUT MODAL ═══ -->
+<div id="xd-work-modal-bg">
+  <div id="xd-work-modal">
+    <button id="xd-modal-close" onclick="G.closeWorkout()">&#x2715;</button>
+    <div class="work-head">
+      <div class="work-title-wrap">
+        <span class="work-subtitle">Your Plan</span>
+        <h3 id="work-plan-name">Today Workout</h3>
+      </div>
+      <div class="calendar-mini">
+        <div class="cal-day"><span class="d-name">Mon</span><span class="d-num">24</span></div>
+        <div class="cal-day"><span class="d-name">Tue</span><span class="d-num">25</span></div>
+        <div class="cal-day"><span class="d-name">Wed</span><span class="d-num">26</span></div>
+        <div class="cal-day"><span class="d-name">Thu</span><span class="d-num">27</span></div>
+        <div class="cal-day today active"><span class="d-name">Fri</span><span class="d-num">28</span></div>
+        <div class="cal-day"><span class="d-name">Sat</span><span class="d-num">29</span></div>
+        <div class="cal-day"><span class="d-name">Sun</span><span class="d-num">30</span></div>
+      </div>
+    </div>
+
+    <div class="work-stats-row">
+      <div class="work-stat-pill pill-accent" id="work-mg">CHEST</div>
+      <div class="work-stat-pill"><span>Total calories burned</span> <b id="work-cal">320</b></div>
+      <div class="work-stat-pill"><span>Total Time</span> <b id="work-time">45:00</b></div>
+    </div>
+
+    <div class="ex-grid" id="ex-list-mount">
+      <!-- Exercises will be injected here -->
+      <div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2)">Loading workout plan...</div>
+    </div>
+  </div>
+</div>
+
 <div id="xd-toast"></div>
 
 <!-- ═══ FOOTER ═══ -->
@@ -932,6 +1005,7 @@ const G = {
     bmi: 24.5, bmiCat: 'Normal',
     weight: 75, height: 175,
     health: 65,
+    restUrl: '/wp-json/trainopro/v1/',
   },
 
   init() {
@@ -987,11 +1061,29 @@ const G = {
     this.render();
   },
 
+  async persistProfile() {
+    try {
+      const response = await fetch(this.s.restUrl + 'profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': wpApiSettings.nonce },
+        body: JSON.stringify({
+          current_weight: this.s.weight,
+          age: 25, // Placeholder or fetch from state
+          gender: 'Male',
+          goal: 'Muscle Gain'
+        })
+      });
+      const data = await response.json();
+      if (data.success) console.log('Profile persisted');
+    } catch (e) { console.error('Persistence failed', e); }
+  },
+
   calcBMIBtn() {
     const w = parseFloat(document.getElementById('bmi-w-inp')?.value) || 75;
     const h = parseFloat(document.getElementById('bmi-h-inp')?.value) || 175;
     this.calcBMI(w, h);
     this.toast('BMI: ' + this.s.bmi + ' — ' + this.s.bmiCat);
+    this.persistProfile();
   },
 
   bmiFromWeight() {
@@ -1001,6 +1093,114 @@ const G = {
       document.getElementById('bmi-w-inp').value = v;
       this.calcBMI(v, this.s.height);
       this.toast('Weight ' + v + 'kg saved. BMI updated!');
+      this.persistProfile();
+    }
+  },
+
+  openWorkout() {
+    document.getElementById('xd-work-modal-bg').classList.add('open');
+    this.fetchTodayPlan();
+  },
+
+  closeWorkout() {
+    document.getElementById('xd-work-modal-bg').classList.remove('open');
+  },
+
+  async fetchTodayPlan() {
+    const mount = document.getElementById('ex-list-mount');
+    if (mount) mount.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.2)">Loading workout plan...</div>';
+    
+    try {
+      const resp = await fetch(this.s.restUrl + 'today-plan');
+      const data = await resp.json();
+      this.renderWorkout(data);
+    } catch (e) {
+      if (mount) mount.innerHTML = '<div style="padding:40px;text-align:center;color:#e91e8c">Error loading plan.</div>';
+    }
+  },
+
+  renderWorkout(data) {
+    document.getElementById('work-plan-name').textContent = data.plan_name || 'Today Workout';
+    document.getElementById('work-mg').textContent = (data.muscle_group || 'CHEST').toUpperCase();
+    document.getElementById('work-cal').textContent = data.calories_est || '320';
+    document.getElementById('work-time').textContent = (data.duration_min || '45') + ':00';
+
+    const mount = document.getElementById('ex-list-mount');
+    if (!mount) return;
+
+    if (!data.exercise_list || data.exercise_list.length === 0) {
+      mount.innerHTML = '<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.4)">No exercises assigned for today.</div>';
+      return;
+    }
+
+    mount.innerHTML = data.exercise_list.map(ex => `
+      <div class="ex-card">
+        <div class="ex-img-wrap">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=200" class="ex-img" alt="${ex.name}">
+          <div class="ex-img-overlay"></div>
+        </div>
+        <div class="ex-info">
+          <span class="ex-badge badge-ch">${data.muscle_group || 'Chest'}</span>
+          <span class="ex-name">${ex.name}</span>
+          <div style="display:flex; gap:10px; align-items:center; margin-top:8px;">
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <span style="font-size:9px; color:rgba(255,255,255,0.3)">SETS</span>
+              <input type="number" class="inp-sets" value="${ex.sets.split('-')[0] || 3}" style="width:35px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:11px; border-radius:4px; padding:2px 4px;">
+            </div>
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <span style="font-size:9px; color:rgba(255,255,255,0.3)">REPS</span>
+              <input type="number" class="inp-reps" value="${ex.reps.split('-')[0] || 12}" style="width:35px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:11px; border-radius:4px; padding:2px 4px;">
+            </div>
+            <span style="font-size:11px; color:rgba(255,255,255,0.4); margin-left:5px; margin-top:12px;">Tar: ${ex.target_weight}</span>
+          </div>
+        </div>
+        <div class="ex-action">
+          <div class="ex-plus" onclick="G.logExercise('${ex.name}', '${data.muscle_group}', this)">+</div>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  async logExercise(name, mg, btn) {
+    const card = btn.closest('.ex-card');
+    const sets = card.querySelector('.inp-sets')?.value || 1;
+    const reps = card.querySelector('.inp-reps')?.value || 10;
+    
+    btn.innerHTML = '⌛';
+    
+    try {
+        const resp = await fetch(this.s.restUrl + 'log', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json', 
+              'X-WP-Nonce': (typeof wpApiSettings !== 'undefined') ? wpApiSettings.nonce : '' 
+            },
+            body: JSON.stringify({
+                exercise: name,
+                muscle_group: mg,
+                sets_done: parseInt(sets),
+                reps_done: parseInt(reps),
+                log_date: new Date().toISOString().split('T')[0]
+            })
+        });
+        const d = await resp.json();
+        if (d.success) {
+            this.toast(`✅ ${name} logged!`);
+            btn.innerHTML = '✔';
+            btn.style.background = '#00e676';
+            btn.style.borderColor = '#00e676';
+            btn.style.color = '#000';
+            
+            // Connection: Update Achievements & Health
+            this.s.achievements = Math.min(100, this.s.achievements + 2);
+            this.s.health = this.calcHealth();
+            this.render();
+        } else {
+            throw new Error('Save failed');
+        }
+    } catch (e) { 
+        this.toast('❌ Failed to log. Are you logged in?');
+        btn.innerHTML = '+';
     }
   },
 
@@ -1295,10 +1495,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close modal on backdrop click
-  const modalBg = document.getElementById('xd-modal-bg');
-  if (modalBg) modalBg.addEventListener('click', function(e){
-    if (e.target === this) G.closeAI();
+  // Close models on backdrop click
+  [modalBg, document.getElementById('xd-work-modal-bg')].forEach(mb => {
+    if (mb) mb.addEventListener('click', function(e){
+      if (e.target === this) {
+        if (this.id.includes('work')) G.closeWorkout();
+        else G.closeAI();
+      }
+    });
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      G.closeAI();
+      G.closeWorkout();
+    }
   });
 });
 </script>
